@@ -10,12 +10,14 @@ mc = int(input('Number of time you want to run simulation?\n'))
 import random
 import matplotlib.pyplot as plt
 
+//randomly generating number of claims asked for each time simulation runs
 def randomClaim(sim):
     claim = []
     for i in range(sim):
         claim.append(random.randint(0, customers))
     return claim
 
+//calculating fraction of people who will ask for claim after every year in between total terms of insurance out of total claims
 def claimProb():
     a = 1
     prob = []
@@ -26,17 +28,20 @@ def claimProb():
     return prob
 
 
-
+// calculating profit after every year until term is completed
 def profit(numClaim):
     net_profit = []
     probList = claimProb()
+    
+    // those who asked claims meand they are no more bound to pay insurance so calculating remaining number of customers
     rem_cust = []
     for i,j in enumerate(probList):
         if i == 0:
             rem_cust.append(customers - numClaim*probList[i])
         else :
             rem_cust.append(rem_cust[i-1] - numClaim*probList[i])
-
+    
+    // finding profit from amount of prev year and then calculating current year amount after settling claims ans recieving insurance from rem customers 
     curr_amount = []
     for i,s in enumerate(probList):
         if i == 0 :
